@@ -1,0 +1,11 @@
+{
+  "name": "منصة أسئلة طب الأزهر",
+  "short_name": "طب الأزهر",
+  "description": "منصة تدريب ومراجعة لطلاب كلية الطب",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f9fbfb",
+  "theme_color": "#f9fbfb"
+}
