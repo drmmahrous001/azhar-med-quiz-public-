@@ -20,21 +20,7 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   generator: 'v0.app',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/icon.svg',
   },
 }
 
@@ -52,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" dir="ltr" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="ar" dir="rtl" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="min-h-dvh antialiased">
         <ServiceWorkerRegister />
         <SiteHeader />
