@@ -3,8 +3,9 @@
 import { useMemo, useState } from 'react'
 import { BookOpen, CheckSquare, Search } from 'lucide-react'
 
-type EssayGroup = { chapter: string; sourcePage: number; items: string[] }
-type Checklist = { title: string; sourcePage: number; lines: string[] }
+import type { EssaySection, ChecklistSection } from '@/lib/import/parse-book'
+type EssayGroup = EssaySection
+type Checklist = ChecklistSection
 
 export function StudyBrowser({ essays, checklists }: { essays: EssayGroup[]; checklists: Checklist[] }) {
   const [tab, setTab] = useState<'essays' | 'checklists'>('essays')
@@ -26,7 +27,7 @@ export function StudyBrowser({ essays, checklists }: { essays: EssayGroup[]; che
     </div>
     {tab==='essays' ? <>
       <select value={chapter} onChange={e=>{setChapter(e.target.value);setExpanded(null)}} className="h-10 max-w-full rounded-lg border bg-background px-3 text-sm"><option value="all">All chapters ({essays.length})</option>{essays.map(g=><option key={g.chapter} value={g.chapter}>{g.chapter}</option>)}</select>
-      <div className="space-y-3">{filteredEssays.map(group=><article key={group.chapter} className="overflow-hidden rounded-xl border bg-card"><button onClick={()=>setExpanded(expanded===group.index?null:group.index)} className="flex w-full items-center justify-between gap-4 p-4 text-left"><span><span className="block font-semibold">{group.chapter}</span><span className="mt-1 block text-xs text-muted-foreground">{group.items.length} prompts · Source page {group.sourcePage}</span></span><span className="text-muted-foreground">{expanded===group.index?'−':'+'}</span></button>{expanded===group.index&&<ol className="space-y-2 border-t px-5 py-4">{group.items.map((item,i)=><li key={i} className="flex gap-3 text-sm leading-6"><span className="min-w-5 text-muted-foreground">{i+1}.</span><span>{item}</span></li>)}</ol>}</article>)}{filteredEssays.length===0&&<p className="rounded-xl border p-6 text-center text-sm text-muted-foreground">No matching study materials.</p>}</div>
+      <div className="space-y-3">{filteredEssays.map(group=><article key={group.chapter} className="overflow-hidden rounded-xl border bg-card"><button onClick={()=>setExpanded(expanded===group.index?null:group.index)} className="flex w-full items-center justify-between gap-4 p-4 text-left"><span><span className="block font-semibold">{group.chapter}</span><span className="mt-1 block text-xs text-muted-foreground">{group.items.length} prompts · {group.sourcePage ? `Source page ${group.sourcePage}` : 'Source page unavailable'}</span></span><span className="text-muted-foreground">{expanded===group.index?'−':'+'}</span></button>{expanded===group.index&&<ol className="space-y-2 border-t px-5 py-4">{group.items.map((item,i)=><li key={i} className="flex gap-3 text-sm leading-6"><span className="min-w-5 text-muted-foreground">{i+1}.</span><span>{item}</span></li>)}</ol>}</article>)}{filteredEssays.length===0&&<p className="rounded-xl border p-6 text-center text-sm text-muted-foreground">No matching study materials.</p>}</div>
     </> : <div className="space-y-3">{filteredChecklists.map((group,i)=><article key={group.title} className="overflow-hidden rounded-xl border bg-card"><button onClick={()=>setExpanded(expanded===`c${i}`?null:`c${i}`)} className="flex w-full items-center justify-between gap-4 p-4 text-left"><span><span className="block font-semibold">{group.title}</span><span className="mt-1 block text-xs text-muted-foreground">{group.lines.length} items · Source page {group.sourcePage}</span></span><span className="text-muted-foreground">{expanded===`c${i}`?'−':'+'}</span></button>{expanded===`c${i}`&&<ul className="space-y-2 border-t px-5 py-4">{group.lines.map((line,j)=><li key={j} className="flex gap-3 text-sm leading-6"><span className="text-muted-foreground">□</span><span>{line}</span></li>)}</ul>}</article>)}{filteredChecklists.length===0&&<p className="rounded-xl border p-6 text-center text-sm text-muted-foreground">No matching checklists.</p>}</div>}
   </section>
 }
