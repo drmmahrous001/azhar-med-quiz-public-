@@ -47,7 +47,8 @@ export default function OfflineStudyClient() {
 
   const pool = useMemo(() => {
     const chapterFiltered = chapter === 'all' ? questions : questions.filter((q) => q.chapterNumber === chapter)
-    return Array.isArray(config.chapters) ? chapterFiltered.filter((q) => config.chapters.some((chapterNumber: number) => chapterNumber === q.chapterNumber)) : chapterFiltered
+    const selectedChapters = config.chapters
+    return selectedChapters === 'all' ? chapterFiltered : chapterFiltered.filter((q) => selectedChapters.includes(q.chapterNumber))
   }, [questions, chapter, config.chapters])
 
   if (loading) return <main dir="rtl" className="mx-auto max-w-3xl p-6 text-center">جاري فتح بنك الأسئلة المحفوظ…</main>
